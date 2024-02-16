@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 
 const Header = (props) => {
-    console.log(props)
     return (
         <div>
             <h1>{props.course}</h1>
@@ -12,22 +11,28 @@ const Header = (props) => {
 
 const Content = (props) => {
     console.log(props)
+    const contentArray = props.contents
     return (
         <div>
-            {props.contents.map((data, index) => (
-                <p key={index}>
-                    {data.part} {data.exercises}
-                </p>
-            ))}
+            <Part part={contentArray[0].part} exercises={contentArray[0].exercises} />
+            <Part part={contentArray[1].part} exercises={contentArray[1].exercises} />
+            <Part part={contentArray[2].part} exercises={contentArray[2].exercises} />
         </div>
     )
 }
 
 const Total = (props) => {
-    console.log(props)
     return (
         <div>
             <p>{props.totalText} {props.totalNumber}</p>
+        </div>
+    )
+}
+
+const Part = (props) => {
+    return (
+        <div>
+            <p>{props.part} {props.exercises}</p>
         </div>
     )
 }
