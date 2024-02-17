@@ -12,7 +12,6 @@ const Course = (props) => {
     )
 }
 
-
 const Header = (props) => {
     return (
         <div>
