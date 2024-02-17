@@ -12,17 +12,24 @@ const Header = ({headerText}) => {
 }
 
 const Statistics = (props) => {
-    return (
-        <div>
-            <div>Good {props.good}</div>
-            <div>Neutral {props.neutral}</div>
-            <div>Bad {props.bad}</div>
+    if (props.all > 0) {
+        return (
+            <div>
+                <div>Good {props.good}</div>
+                <div>Neutral {props.neutral}</div>
+                <div>Bad {props.bad}</div>
 
-            <div>All {props.all}</div>
-            <div>Average {props.average}</div>
-            <div>Positive {props.positive}</div>
-        </div>
-    )
+                <div>All {props.all}</div>
+                <div>Average {props.average}</div>
+                <div>Positive {props.positive}</div>
+            </div>
+        )
+    } else {
+        return (
+            <div>No feedback given</div>
+        )
+    }
+    
 }
 
 const App = () => {
