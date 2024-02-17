@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 
-const Header = ({headerText}) => {
+const Header = ({ headerText }) => {
     return (
         <div>
             <h1>{headerText}</h1>
@@ -51,7 +51,7 @@ const Statistics = (props) => {
             <div>No feedback given</div>
         )
     }
-    
+
 }
 
 const App = () => {
@@ -78,7 +78,7 @@ const App = () => {
 
             <Header headerText={statisticsHeader} />
             <Statistics good={good} neutral={neutral} bad={bad} all={all} average={average} positive={positive} />
-            
+
         </div>
     )
 }
