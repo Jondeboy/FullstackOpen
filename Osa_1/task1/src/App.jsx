@@ -1,73 +1,39 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
-const Header = (props) => {
+import { useState } from 'react'
+
+const Header = ({headerText}) => {
     return (
         <div>
-            <h1>{props.course}</h1>
+            <h1>{headerText}</h1>
         </div>
     )
 }
-
-const Content = (props) => {
-    console.log(props)
-    const contentArray = props.contents
-    return (
-        <div>
-            <Part part={contentArray[0].name} exercises={contentArray[0].exercises} />
-            <Part part={contentArray[1].name} exercises={contentArray[1].exercises} />
-            <Part part={contentArray[2].name} exercises={contentArray[2].exercises} />
-        </div>
-    )
-}
-
-const Total = (props) => {
-    const totalString = 'Number of exercises'
-
-    // Calculate the sum of exercises
-    const totalSum = props.parts.reduce((sum, part) => sum + part.exercises, 0);
-
-    return (
-        <div>
-            <p>{totalString} {totalSum}</p>
-        </div>
-    )
-}
-
-const Part = (props) => {
-    return (
-        <div>
-            <p>{props.part} {props.exercises}</p>
-        </div>
-    )
-}
-
 
 const App = () => {
+    const [good, setGood] = useState(0)
+    const [neutral, setNeutral] = useState(0)
+    const [bad, setBad] = useState(0)
 
-    const course = {
-        name: 'Half Stack application development',
-        parts: [
-            {
-                name: 'Fundamentals of React',
-                exercises: 10
-            },
-            {
-                name: 'Using props to pass data',
-                exercises: 7
-            },
-            {
-                name: 'State of a component',
-                exercises: 14
-            }
-        ]
-    }
+    const feedbackHeader = "Give feedback"
+    const statisticsHeader = "Statistics"
 
     return (
         <div>
-            <Header course={course.name} />
-            <Content contents={course.parts} />
-            <Total parts={course.parts} />
+            <Header headerText={feedbackHeader} />
+
+            <div>
+                <button onClick={() => setGood(good + 1)}>Good</button>
+                <button onClick={() => setNeutral(neutral + 1)}>Neutral</button>
+                <button onClick={() => setBad(bad + 1)}>Bad</button>
+            </div>
+
+            <Header headerText={statisticsHeader} />
+
+            <div>Good {good}</div>
+            <div>Neutral {neutral}</div>
+            <div>Bad {bad}</div>
         </div>
     )
 }
