@@ -19,21 +19,31 @@ const Button = ({ label, onClick }) => {
     )
 }
 
-const StatisticsLine = (props) => (
-    <div>{props.text} {props.value}</div>
-)
+const StatisticsLine = (props) => {
+    return (
+        <tr>
+            <td>{props.text}</td>
+            <td>{props.value}</td>
+        </tr>
+    )
+}
 
 const Statistics = (props) => {
     if (props.all > 0) {
         return (
-            <div>
-                <StatisticsLine text="Good" value={props.good} />
-                <StatisticsLine text="Neutral" value={props.neutral} />
-                <StatisticsLine text="Bad" value={props.bad} />
 
-                <StatisticsLine text="All" value={props.all} />
-                <StatisticsLine text="Average" value={props.average} />
-                <StatisticsLine text="Positive" value={props.positive} />
+            <div>
+                <table>
+                    <tbody>
+                        <StatisticsLine text="Good" value={props.good} />
+                        <StatisticsLine text="Neutral" value={props.neutral} />
+                        <StatisticsLine text="Bad" value={props.bad} />
+
+                        <StatisticsLine text="All" value={props.all} />
+                        <StatisticsLine text="Average" value={props.average} />
+                        <StatisticsLine text="Positive" value={props.positive} />
+                    </tbody>
+                </table>
             </div>
         )
     } else {
