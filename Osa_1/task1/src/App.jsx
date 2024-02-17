@@ -11,6 +11,20 @@ const Header = ({headerText}) => {
     )
 }
 
+const Statistics = (props) => {
+    return (
+        <div>
+            <div>Good {props.good}</div>
+            <div>Neutral {props.neutral}</div>
+            <div>Bad {props.bad}</div>
+
+            <div>All {props.all}</div>
+            <div>Average {props.average}</div>
+            <div>Positive {props.positive}</div>
+        </div>
+    )
+}
+
 const App = () => {
     const [good, setGood] = useState(0)
     const [neutral, setNeutral] = useState(0)
@@ -34,14 +48,8 @@ const App = () => {
             </div>
 
             <Header headerText={statisticsHeader} />
-
-            <div>Good {good}</div>
-            <div>Neutral {neutral}</div>
-            <div>Bad {bad}</div>
-
-            <div>All {all}</div>
-            <div>Average {average}</div>
-            <div>Positive {positive}</div>
+            <Statistics good={good} neutral={neutral} bad={bad} all={all} average={average} positive={positive} />
+            
         </div>
     )
 }
