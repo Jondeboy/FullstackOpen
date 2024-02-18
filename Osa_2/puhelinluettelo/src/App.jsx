@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import numberService from './services/numbers'
 
 const Filter = ({ value, onChange }) => {
     return (
@@ -70,9 +71,17 @@ const App = () => {
             alert(`${newName} is already added to phonebook`)
             return
         }
-        setPersons(persons.concat(personObject))
-        setNewName('')
-        setNewNumber('')
+
+        numberService
+            .create(personObject)
+            .then(returnedPerson => {
+                setPersons(persons.concat(returnedPerson))
+                setNewName('')
+                setNewNumber('')
+            })
+
+        
+        
     }
 
     const personsToShow = !newFilterInput
