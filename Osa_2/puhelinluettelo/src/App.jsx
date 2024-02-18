@@ -1,5 +1,44 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { useState } from 'react'
+
+const Filter = ({ value, onChange }) => {
+    return (
+        <div>
+            Filter shown with <input placeholder="Search" value={value} onChange={onChange} />
+        </div>
+    )
+}
+
+const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, addNumber }) => {
+    return (
+        <form onSubmit={addNumber}>
+            <div>
+                name: <input value={newName} onChange={(event) => setNewName(event.target.value)} />
+            </div>
+            <div>
+                number: <input value={newNumber} onChange={(event) => setNewNumber(event.target.value)} />
+            </div>
+            <div>
+                <button type="submit">add</button>
+            </div>
+        </form>
+    )
+}
+
+const Persons = ({ persons }) => {
+    return (
+        <div>
+            {persons.map(person => <Person key={person.name} person={person} />)}
+        </div>
+    )
+}
+
+const Person = ({ person }) => {
+    return (
+        <p>{person.name} {person.number}</p>
+    )
+}
 
 const App = () => {
     const [persons, setPersons] = useState([
@@ -39,23 +78,22 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
-            <div>
-                Filter shown with <input placeholder="Search" value={newFilterInput} onChange={(event) => setNewFilterInput(event.target.value)} />
-            </div>
+
+            <Filter value={newFilterInput} onChange={(event) => setNewFilterInput(event.target.value)} />
+
             <h2>Add a new</h2>
-            <form onSubmit={addNumber}>
-                <div>
-                    name: <input value={newName} onChange={(event) => setNewName(event.target.value)} />
-                </div>
-                <div>
-                    number: <input value={newNumber} onChange={(event) => setNewNumber(event.target.value)} />
-                </div>
-                <div>
-                    <button type="submit">add</button>
-                </div>
-            </form>
+
+            <PersonForm
+                newName={newName}
+                setNewName={setNewName}
+                newNumber={newNumber}
+                setNewNumber={setNewNumber}
+                addNumber={addNumber}
+            />
+
             <h2>Numbers</h2>
-            {personsToShow.map(person => <p key={person.name}>{person.name} {person.number}</p>)}
+
+            <Persons persons={personsToShow} />
 
         </div>
     )
