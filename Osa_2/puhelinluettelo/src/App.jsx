@@ -4,6 +4,18 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import numberService from './services/numbers'
 
+const SuccessNotification = ({ message }) => {
+    if (message === null) {
+        return null
+    }
+
+    return (
+        <div className="success">
+            {message}
+        </div>
+    )
+}
+
 const Filter = ({ value, onChange }) => {
     return (
         <div>
@@ -50,6 +62,7 @@ const App = () => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [newFilterInput, setNewFilterInput] = useState('')
+    const [successMessage, setSuccessMessage] = useState(null)
 
     useEffect(() => {
         console.log('effect')
@@ -78,6 +91,10 @@ const App = () => {
                     .update(person.id, changedPerson)
                     .then(returnedPerson => {
                         setPersons(persons.map(person => person.id !== returnedPerson.id ? person : returnedPerson))
+                        setSuccessMessage(`Updated ${person.name}`)
+                        setTimeout(() => {
+                            setSuccessMessage(null)
+                        }, 5000)
                     })
             }
         } else {
@@ -85,6 +102,10 @@ const App = () => {
                 .create(personObject)
                 .then(returnedPerson => {
                     setPersons(persons.concat(returnedPerson))
+                    setSuccessMessage(`Added ${returnedPerson.name}`)
+                    setTimeout(() => {
+                        setSuccessMessage(null)
+                    }, 5000)
                 })
         }
 
@@ -99,6 +120,10 @@ const App = () => {
                 .deletePerson(id)
                 .then(() => {
                     setPersons(persons.filter(person => person.id !== id))
+                    setSuccessMessage(`Deleted ${name}`)
+                    setTimeout(() => {
+                        setSuccessMessage(null)
+                    }, 5000)
                 })
         }
     }
@@ -114,6 +139,8 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
+
+            <SuccessNotification message={successMessage} />
 
             <Filter value={newFilterInput} onChange={(event) => setNewFilterInput(event.target.value)} />
 
