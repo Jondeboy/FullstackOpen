@@ -16,6 +16,18 @@ const SuccessNotification = ({ message }) => {
     )
 }
 
+const ErrorNotification = ({ message }) => {
+    if (message === null) {
+        return null
+    }
+
+    return (
+        <div className="error">
+            {message}
+        </div>
+    )
+}
+
 const Filter = ({ value, onChange }) => {
     return (
         <div>
@@ -63,6 +75,7 @@ const App = () => {
     const [newNumber, setNewNumber] = useState('')
     const [newFilterInput, setNewFilterInput] = useState('')
     const [successMessage, setSuccessMessage] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
         console.log('effect')
@@ -96,6 +109,14 @@ const App = () => {
                             setSuccessMessage(null)
                         }, 5000)
                     })
+                    .catch(error => {
+                        setErrorMessage(`Information of ${person.name} has already been removed from server`)
+                        setTimeout(() => {
+                            setErrorMessage(null)
+                        }, 5000)
+                        setPersons(persons.filter(p => p.id !== person.id))
+                    })
+                    
             }
         } else {
             numberService
@@ -141,6 +162,7 @@ const App = () => {
             <h2>Phonebook</h2>
 
             <SuccessNotification message={successMessage} />
+            <ErrorNotification message={errorMessage} />
 
             <Filter value={newFilterInput} onChange={(event) => setNewFilterInput(event.target.value)} />
 
