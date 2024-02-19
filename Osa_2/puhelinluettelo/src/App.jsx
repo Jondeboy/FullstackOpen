@@ -71,17 +71,26 @@ const App = () => {
         }
 
         if (persons.some(person => person.name === newName)) {
-            alert(`${newName} is already added to phonebook`)
-            return
+            if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+                const person = persons.find(person => person.name === newName)
+                const changedPerson = { ...person, number: newNumber }
+                numberService
+                    .update(person.id, changedPerson)
+                    .then(returnedPerson => {
+                        setPersons(persons.map(person => person.id !== returnedPerson.id ? person : returnedPerson))
+                    })
+            }
+        } else {
+            numberService
+                .create(personObject)
+                .then(returnedPerson => {
+                    setPersons(persons.concat(returnedPerson))
+                })
         }
 
-        numberService
-            .create(personObject)
-            .then(returnedPerson => {
-                setPersons(persons.concat(returnedPerson))
-                setNewName('')
-                setNewNumber('')
-            })
+        setNewName('')
+        setNewNumber('')
+        
     }
 
     const deleteNumber = (id, name) => {
