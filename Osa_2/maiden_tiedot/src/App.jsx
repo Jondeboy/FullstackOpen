@@ -3,6 +3,16 @@ import axios from 'axios'
 
 
 const ShowCountry = ({ country }) => {
+    const [weather, setWeather] = useState('');
+
+    axios.get(`http://wttr.in/${country.capital}?format=%C+%t`)
+        .then(response => {
+            console.log(response.data)
+            setWeather(response.data)
+        })
+        .catch(error => {
+            console.error('Error fetching weather', error);
+        });
     return (
         <div>
             <h1>{country.name.common}</h1>
@@ -13,6 +23,9 @@ const ShowCountry = ({ country }) => {
                 {Object.values(country.languages).map((language, index) => <li key={index}>{language}</li>)}
             </ul>
             <img src={country.flags.png} alt="Flag" width="100px" />
+
+            <h1>Weather in {country.name.common}</h1>
+            <p>{weather}</p>
         </div>
     )
 }
