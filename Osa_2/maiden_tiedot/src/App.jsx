@@ -17,7 +17,7 @@ const ShowCountry = ({ country }) => {
     )
 }
 
-const ShowCountries = ({ countries, searchText }) => {
+const ShowCountries = ({ countries, searchText, setSelectedCountry }) => {
     if (searchText.length > 0 && countries.length > 10) {
         return (
             <div>
@@ -42,7 +42,7 @@ const ShowCountries = ({ countries, searchText }) => {
 
     return (
         <div>
-            {countries.map(country => <div key={country.name.common}>{country.name.common}</div>)}
+            {countries.map(country => <div key={country.name.common}>{country.name.common} <button onClick={() => setSelectedCountry(country)}>Show</button></div>)}
         </div>
     )
 }
@@ -52,6 +52,7 @@ function App() {
     const [countries, setCountries] = useState([])
     const [filteredCountries, setFilteredCountries] = useState([])
     const [search, setSearch] = useState('')
+    const [selectedCountry, setSelectedCountry] = useState(null)
 
     useEffect(() => {
         axios
@@ -64,6 +65,7 @@ function App() {
 
     const handleSearchChange = (event) => {
         setSearch(event.target.value)
+        setSelectedCountry(null)
         const filteredCountriesList = countries.filter(country => country.name.common.toLowerCase().includes(event.target.value.toLowerCase()))
         setFilteredCountries(filteredCountriesList)
     }
@@ -71,7 +73,8 @@ function App() {
   return (
       <div>
           Find countries <input value={search} onChange={handleSearchChange} />
-          <ShowCountries countries={filteredCountries} searchText={search} />
+          <ShowCountries countries={filteredCountries} searchText={search} setSelectedCountry={setSelectedCountry} />
+          {selectedCountry && <ShowCountry country={selectedCountry} />}
       </div>
   )
 }
